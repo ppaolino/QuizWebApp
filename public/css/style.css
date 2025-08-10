@@ -1,0 +1,233 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 23-feb-2020, 12.24.39
+    Author     : devis
+*/
+
+li a.active {
+    background-color: #F5F0E6;
+    color: #0D2B45;
+}
+
+.modal-header, .modal-footer{
+    background-image: url("../img/background-yellow.png");
+}
+
+.quiz-card-body-success, .bodygreen{
+    background-image: url("../img/background-green.png");
+}
+
+.quiz-card-body-warning, .bodyyellow{
+    background-image: url("../img/background-yellow.png");
+}
+
+.quiz-card-body-primary, .bodyblue{
+    background-image: url("../img/background-blue.png");
+}
+
+.quiz-card-body-danger, .bodyred{
+    background-image: url("../img/background-red.png");
+}
+
+
+.container-fluid, .container {
+    background-color: whitesmoke;
+    max-width: 95vw !important;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+}
+
+.box-score {
+    background-color: #2C3E50;
+    max-width: 95vw !important;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+}
+
+.header-sezione {
+    border-bottom: 2px solid #0D2B45;
+    margin-bottom: 2em;
+}
+
+.confirm {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.invalid-input {
+    color: #bd2626;
+    font-weight: bold;
+}
+
+.img-thumbnail-navbar {
+    padding: 0.15rem;
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    max-width: 100%;
+}
+
+.img-index {
+    padding: 0.15rem;
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    max-width:80%;
+}
+
+.dropdown-menu.auto-width {
+    width: auto;
+    min-width: unset;
+    /* Removes Bootstrap’s default 10rem */
+}
+
+.card-player-custom {
+    width: 9rem;
+    position: relative;
+    /*border-width: 2px;*/
+}
+
+
+.card-player-active {
+    background-color: #8fd6a8 !important;
+}
+
+.card-player-active::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(25, 135, 84, 0.3);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.card-player-inactive {
+    background-color: white !important;
+}
+
+.card-player-revealed {
+    background-color: #f5a5ab !important;
+}
+
+.card-player-revealed::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(220, 53, 69, 0.3);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+
+.card-player-img {
+    padding: 1rem;
+    height: 7rem;
+    object-fit: contain;
+}
+
+.card-player-header-active {
+    background-color: #198754 !important;
+    /* Bootstrap success */
+    color: #fff !important;
+}
+
+.card-player-header-inactive {
+    background-color: #0d6efd !important;
+    /* Bootstrap primary */
+    color: #fff !important;
+}
+
+.card-player-header-revealed {
+    background-color: #dc3545 !important; /* Bootstrap danger */
+    color: #fff !important;
+}
+
+.card{
+    padding: 0;
+}
+
+/* player search bar */
+.tt-menu {
+    width: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 0.375rem 0.375rem;
+    /* matches .form-control */
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    margin-top: -1px;
+
+    max-height: 40vh; /* limits height to 40% of viewport height */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.tt-suggestion {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.tt-suggestion:hover,
+.tt-suggestion.tt-cursor {
+    background-color: #e9ecef;
+}
+
+.player-name {
+    font-weight: 500;
+}
+
+.player-position {
+    font-size: 0.875rem;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
+.tt-suggestion:not(:last-child) {
+    border-bottom: 1px solid #dee2e6;
+}
+
+#player-search.twitter-typeahead,
+.twitter-typeahead {
+    display: block !important;
+    width: 100% !important;
+}
+
+/* Optional: scrollbar styling */
+.tt-menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tt-menu::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+
+/* player search bar end */
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main.flex-grow-1 {
+    flex: 1 0 auto;
+}
