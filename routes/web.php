@@ -10,6 +10,7 @@ use App\Http\Controllers\QuizAttemptController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizAnswerController;
 use App\Http\Controllers\UserAnswerController;
+use App\Http\Controllers\UserController;
 
 /*
 Route::get('/', function () {
@@ -70,17 +71,19 @@ Route::middleware(['lang'])->group(function () {
 
         Route::get('/create-quiz', [QuizController::class, 'quizCreationPage'])->name('create.quiz'); // verify that there are no drafts for the quiz creation page
 
+        Route::get('/my-statistics-creator', [UserController::class, 'showStatisticsCreator'])->name('creator.statistics');
+
     });
 
 
     Route::middleware(['auth', 'isAdmin'])->group(function () {
-        /*
+
         Route::resource('league', LeagueController::class); // create, edit, delete leagues
 
         Route::resource('team', TeamController::class); // create, edit, delete teams
 
         Route::resource('player', PlayerController::class); // create, edit, delete players
-
+        /*
         Route::get('/quiz/', [QuizController::class, 'index'])->name('quiz.index'); // list all quizzes
 
         Route::get('quiz/{id}', [QuizController::class, 'show'])->name('quiz.show'); // show a specific quiz ???serve???
@@ -89,6 +92,15 @@ Route::middleware(['lang'])->group(function () {
 
         Route::delete('/quiz/{id}', [QuizController::class, 'destroy'])->name('quiz.destroy'); // delete a specific quiz
         */
+
+        Route::get('/approve/quiz', [QuizController::class, 'show'])->name('approve.quiz');
+
+        Route::put('/approve/quiz/{id}', [QuizController::class, 'approve'])->name('approve.quiz.update'); // approve a specific quiz
+
+        Route::delete('/reject/quiz/{id}', [QuizController::class, 'notApprove'])->name('approve.quiz.destroy'); // delete a specific quiz
+
+        Route::get('/manage/database', [FrontController::class, 'manageDatabase'])->name('manage.database'); // page to manage the database (leagues, teams, players)
+
     });
 
     Route::middleware(['auth'])->group(function () {
@@ -108,5 +120,8 @@ Route::middleware(['lang'])->group(function () {
 
         Route::post('/userAnswer',[UserAnswerController::class, 'store'])->name('userAnswer.store'); // create a new user answer
 
+        Route::get('/my-statistics', [UserController::class, 'showStatistics'])->name('user.statistics');
+
+        Route::get('/game-statistics/{id}', [QuizController::class, 'getStats'])->name('game.statistics');
     });
 });

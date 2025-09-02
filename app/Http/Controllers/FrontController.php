@@ -11,13 +11,11 @@ class FrontController extends Controller
             'titolo' => 'Quiz Web App',
             'descrizione' => 'Benvenuto nella Quiz Web App, dove puoi mettere alla prova le tue conoscenze!',
         ]);
+    }
 
-/*
-        return view('quizPage', [
-            'titolo' => 'TITOLO',
-            'descrizione' => 'descrizione del quiz',
-        ]);
-*/
+    public function manageDatabase()
+    {
+        return view('databaseManagementPage');
     }
 
 }

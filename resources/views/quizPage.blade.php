@@ -138,6 +138,7 @@
                                     document.body.classList.remove('bodyyellow');
                                     document.body.classList.add('bodyred');
                                     game_over();
+                                    reveal_buttons('reveal-button');
                                 } else { //user answer is wrong but game not over
                                     markError(errorCount, data.player_name);
                                     errorCount++;
@@ -191,7 +192,7 @@
                 $('#guess-row').remove();
 
                 reveal_buttons('myButtonLink');
-                reveal_buttons('reveal-button');
+
             }
 
 

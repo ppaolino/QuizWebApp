@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ url('/') }}/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url('/') }}/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="icon" type="image/png" href="{{ asset('img/icon.jpg') }}">
 
     <!-- Bootstrap 5 JS bundle (includes Popper.js) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -51,12 +52,27 @@
                         <li class="nav-item me-3">
                             <a class="nav-link" href="{{ route('quiz.index') }}">@lang('messages.play')</a>
                         </li>
-                        <li class="nav-item me-3">
-                            <a class="nav-link" href="">@lang('messages.stats')</a>
-                        </li>
+
                         @if (auth()->user()->role == 'creator')
                             <li class="nav-item me-3">
+                                <a class="nav-link" href="{{ route('creator.statistics') }}">@lang('messages.stats')</a>
+                            </li>
+                            <li class="nav-item me-3">
                                 <a class="nav-link" href="{{ route('create.quiz') }}">@lang('messages.create_quiz')</a>
+                            </li>
+                        @elseif (auth()->user()->role == 'admin')
+                            <li class="nav-item me-3">
+                                <a class="nav-link" href="{{ route('user.statistics') }}">@lang('messages.stats')</a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link" href="{{ route('approve.quiz') }}">@lang('messages.approve_quiz')</a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link" href="{{ route('manage.database') }}">@lang('messages.manage_database')</a>
+                            </li>
+                        @else
+                            <li class="nav-item me-3">
+                                <a class="nav-link" href="{{ route('user.statistics') }}">@lang('messages.stats')</a>
                             </li>
                         @endif
 

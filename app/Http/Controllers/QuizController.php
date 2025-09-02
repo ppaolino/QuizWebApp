@@ -49,20 +49,39 @@ class QuizController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function approve(Request $request)
     {
-        //
+        $dl = new DataLayer();
+        $userId = Auth::id();
+        $dl->publishQuiz($userId, $request->id);
+        return response()->json([
+            'success' => true,
+            'redirect_url' => route('approve.quiz'),
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function notApprove(Request $request)
     {
-        //
+        $dl = new DataLayer();
+        $userId = Auth::id();
+        $dl->destroyQuiz($userId,$request->id);
+        return response()->json([
+            'success' => true,
+            'redirect_url' => route('approve.quiz'),
+        ]);
+    }
+    public function show()
+    {
+        $dl = new DataLayer();
+        $quiz = $dl->getNotApprovedQuizzes();
+
+        if (!$quiz) {
+            return redirect()->route('home')->with('error', 'Quiz not found.');
+        }
+
+        return view('quizIndexPageAdmin', [
+            'quiz' => $quiz
+        ]);
     }
 
     /**
@@ -163,5 +182,17 @@ class QuizController extends Controller
             $quizId = session('active_quiz_id');
         }
         return view('quizFactoryPage', compact('quiz', 'cards', 'languages'));
+    }
+
+    public function getStats($id)
+    {
+        $dl = new DataLayer();
+        $userId = Auth::id();
+
+        $stats = $dl->getQuizDifficultyRank($userId, $id);
+
+        return response()->json([
+            'stats' => $stats
+        ]);
     }
 }

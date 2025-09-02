@@ -1,5 +1,4 @@
-@extends('layouts.master') <!-- title - active_home - active_MyLibrary - breadcrumb - body -->
-
+@extends('layouts.master')
 @section('active_home', 'active')
 
 @section('body')

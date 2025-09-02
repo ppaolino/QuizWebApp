@@ -13,7 +13,9 @@ class LeagueController extends Controller
      */
     public function index()
     {
-        //
+        $dl = new DataLayer();
+        $list = $dl->getAllLeagues();
+        return response()->json($list);
     }
 
     /**
@@ -29,39 +31,54 @@ class LeagueController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        // Validate input
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'logo' => ['nullable', 'image', 'mimes:png', 'max:2048'],
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
+        $dl = new DataLayer();
+        // NOTE: pass the UploadedFile (or null) to the model layer
+        $league = $dl->addLeague($validated['name'], $request->file('logo'));
+
+        return response()->json([
+            'success' => (bool) $league,
+            'id' => $league?->id,
+        ]);
+    }
     public function show(string $id)
     {
-        //
+        $dl = new DataLayer();
+        $league = $dl->getLeagueById($id);
+        return response()->json($league);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['nullable', 'string', 'max:100'],
+            'logo' => ['nullable', 'image', 'mimes:png', 'max:2048'],
+        ]);
+
+        $dl = new DataLayer();
+        $success = $dl->updateLeague($id, $validated['name'] ?? null, $request->file('logo'));
+
+        return response()->json([
+            'success' => $success,
+            'redirect_url' => route('manage.database')
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
-        //
+        $dl = new DataLayer();
+        $result = $dl->deleteLeague($id);
+        return response()->json([
+            'success' => $result,
+            'redirect_url' => route('manage.database'),
+        ]);
     }
 
     public function search(Request $request)

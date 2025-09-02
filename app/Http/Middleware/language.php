@@ -18,10 +18,8 @@ class language
      */
     public function handle(Request $request, Closure $next): Response
     {
-        Log::info('Setting language');
         if(Session::has('language'))
         {
-            Log::info('Language set: ' . Session::get('language'));
             App::setLocale(Session::get('language'));
         }
         return $next($request);

@@ -39,7 +39,12 @@ class PlayerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dl = new DataLayer();
+        $id = $dl->addPlayer($request->input('name'), $request->input('position'));
+        return response()->json([
+            'success' => $id != null,
+            'redirect_url' => route('manage.database'),
+        ]);
     }
 
     /**
@@ -47,7 +52,9 @@ class PlayerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $dl = new DataLayer();
+        $player = $dl->getPlayerById($id);
+        return response()->json($player);
     }
 
     /**
@@ -63,7 +70,11 @@ class PlayerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $dl = new DataLayer();
+        $del = $dl->updatePlayer($request->id, $request->input('name'), $request->input('position'));
+        return response()->json([
+            'success' => $del,
+            'redirect_url' => route('manage.database')]);
     }
 
     /**
@@ -71,7 +82,12 @@ class PlayerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dl = new DataLayer();
+        $result = $dl->deletePlayer($id);
+        return response()->json([
+            'success' => $result,
+            'redirect_url' => route('manage.database'),
+        ]);
     }
 }
 
