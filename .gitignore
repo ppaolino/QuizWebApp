@@ -27,4 +27,4 @@ yarn-error.log
 /public/storage
 
 # Keep these in repository (uncomment if already ignored)
-!/public/build/
+/public/build/
