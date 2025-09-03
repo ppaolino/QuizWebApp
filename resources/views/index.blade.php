@@ -24,7 +24,7 @@
         <div class="row  g-0 mb-5">
             <div class="col-12 d-flex justify-content-center align-items-center">
                 <div id="homepageCarousel" class="carousel slide shadow rounded-pill" data-bs-ride="carousel"
-                    data-bs-interval="2000" style="width:85%;">
+                    data-bs-interval="2000" style="width:75%;">
                     <div class="carousel-inner ratio ratio-21x9">
                         <div class="carousel-item active">
                             <img src="{{ asset('img/homepage/img1.jpg') }}" class="d-block w-100 h-100" alt="Football 1"
@@ -41,14 +41,14 @@
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="{{ asset('img/homepage/img3.png') }}" class="d-block w-100 h-100" alt="Football 3"
+                            <img src="{{ asset('img/homepage/img4.jpg') }}" class="d-block w-100 h-100" alt="Football 3"
                                 style="object-fit:cover;">
                             <div class="carousel-caption  bg-dark bg-opacity-50 rounded">
                                 <h5>@lang('messages.carousel3')</h5>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="{{ asset('img/homepage/img4.png') }}" class="d-block w-100 h-100" alt="Football 4"
+                            <img src="{{ asset('img/homepage/img3.jpg') }}" class="d-block w-100 h-100" alt="Football 4"
                                 style="object-fit:cover;">
                             <div class="carousel-caption  bg-dark bg-opacity-50 rounded">
                                 <h5>@lang('messages.carousel4')</h5>
