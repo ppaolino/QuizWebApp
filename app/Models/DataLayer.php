@@ -689,7 +689,7 @@ class DataLayer
     //corretta
     public function getMostChallengingQuiz($creator_id)
     {
-        return Quiz::where('created_by', $creator_id)
+        $result = Quiz::where('created_by', $creator_id)
             ->withCount(['attempts as won_attempts' => function ($query) {
                 $query->where('score', 1);
             }])
@@ -702,7 +702,13 @@ class DataLayer
                 return $quiz;
             })
             ->sortBy('difficulty_rate')
-            ->first()->only(['name', 'difficulty_rate']);
+            ->first();
+
+        if (!$result) {
+            return ['name' => '-', 'difficulty_rate' => 0];
+        }
+
+        return $result->only(['name', 'difficulty_rate']);
     }
 
     //corretta

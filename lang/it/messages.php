@@ -49,7 +49,7 @@ return [
     'streakStats' => 'Streak di Vittorie',
     'currentStreak' => 'Streak Attuale',
     'longestStreak' => 'Streak Più Lunga',
-    'quizRanking' => 'Quiz Ranking',
+    'quizRanking' => 'Classifica Quiz',
     'selectQuiz' => 'Seleziona un quiz per vedere le tue statistiche',
     'chooseQuiz' => 'Scegli un quiz',
     'userAvgScore' => 'Il tuo punteggio medio',
@@ -105,6 +105,12 @@ return [
     'feature3' => 'Comunità',
     'featureDesc1' => 'Scala le classifiche e confrontati con altri tifosi!',
     'featureDesc2' => 'Ogni quiz è un\'opportunità di imparare calcio.',
-    'featureDesc3' => 'Unisciti a una comunità di tifosi e creatori.'
+    'featureDesc3' => 'Unisciti a una comunità di tifosi e creatori.',
+
+    'calltoaction1' => 'Pronti per iniziare?',
+    'calltoaction2' => 'Registrati ora e inizia la tua avventura con i quiz sul calcio!',
+    'calltoaction3' => ' Inizia Ora',
+
+    'initialMessage' => 'Completa il quiz precedente prima di crearne uno nuovo.'
 
 ];

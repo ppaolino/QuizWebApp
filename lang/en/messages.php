@@ -105,7 +105,10 @@ return [
     'feature3' => 'Community',
     'featureDesc1' => 'Climb the ranks and see how you compare to other soccer fans!',
     'featureDesc2' => 'Every quiz is a chance to learn new facts about your favorite sport.',
-    'featureDesc3' => 'Join a vibrant community of soccer enthusiasts and quiz creators.'
+    'featureDesc3' => 'Join a vibrant community of soccer enthusiasts and quiz creators.',
 
-
+    'calltoaction1' => 'Ready to kick off?',
+    'calltoaction2' => 'Sign up now and start your soccer quiz adventure!',
+    'calltoaction3' => ' Get Started',
+    'initialMessage' => 'Finish the previous quiz before creating a new one.'
 ];

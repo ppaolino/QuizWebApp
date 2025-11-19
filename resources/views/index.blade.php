@@ -107,10 +107,10 @@
             <!-- Call to Action Section -->
             <div class="row justify-content-center mb-5">
                 <div class="col-md-8 text-center">
-                    <h2 class="fw-bold mb-3">Ready to kick off?</h2>
-                    <p class="mb-4">Sign up now and start your soccer quiz adventure!</p>
+                    <h2 class="fw-bold mb-3">@lang('messages.calltoaction1')</h2>
+                    <p class="mb-4">@lang('messages.calltoaction2')</p>
                     <a href="{{ route('register') }}" class="btn btn-lg btn-warning">
-                        <i class="bi bi-person-plus"></i> Get Started
+                        <i class="bi bi-person-plus"></i>@lang('messages.calltoaction3')
                     </a>
                 </div>
             </div>

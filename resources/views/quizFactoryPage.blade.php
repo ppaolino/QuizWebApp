@@ -134,7 +134,7 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                             value="league">
-                                        <label class="form-check-label" for="inlineCheckbox2">@lang('messages.suggestionTypeTeam')</label>
+                                        <label class="form-check-label" for="inlineCheckbox2">@lang('messages.suggestionTypeLeague')</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
@@ -183,7 +183,8 @@
         const quiz = @json($quiz);
         if (quiz) {
             $('#title').text(quiz.name); // Update page title
-            $('#initialMessage').text('Finish the previous quiz before creating a new one.');
+            const finishPreviousMsg = @json(__('messages.initialMessage'));
+            $('#initialMessage').text(finishPreviousMsg);
             $('#form-titolo').hide(); // Hide the form
             $('#prompt').val(quiz.prompt_text); // Set description if available
             $('#max_errors').val(quiz.max_errors); // Set max errors

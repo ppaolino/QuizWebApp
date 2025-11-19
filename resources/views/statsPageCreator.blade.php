@@ -41,15 +41,13 @@
                             <div class="row mb-2">
                                 <div class="col-md-6 text-start">@lang('messages.loseRate')</div>
                                 <div class="col-md-6 text-end">
-                                    {{ isset($completionRate['quiz_completati'], $winRatePercentage['quiz_vinti'])
-                                        ? ($completionRate['quiz_completati'] - $winRatePercentage['quiz_vinti']) : '0' }}
-                                    ({{ isset($completionRate['quiz_completati'], $winRatePercentage['quiz_vinti'])
-                                        ? round(
-                                            (($completionRate['quiz_completati'] - $winRatePercentage['quiz_vinti']) / $completionRate['quiz_completati']) *
-                                                100,
-                                            2,
-                                        )
-                                        : '0' }}%)
+                                    @php
+                                        $completed = $completionRate['quiz_completati'] ?? 0;
+                                        $wins = $winRatePercentage['quiz_vinti'] ?? 0;
+                                        $losses = max(0, $completed - $wins);
+                                        $lossPct = $completed > 0 ? round(($losses / $completed) * 100, 2) : 0;
+                                    @endphp
+                                    {{ $losses }} ({{ $lossPct }}%)
                                 </div>
                             </div>
                         </div>
