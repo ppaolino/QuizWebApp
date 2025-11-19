@@ -283,7 +283,8 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.available) {
-                            $('#initialMessage').text('Title is available, you can proceed.');
+                            const titleAvailable = @json(__('messages.titleAvailable'));
+                            $('#initialMessage').text(titleAvailable);
                             $('#title').text(titolo); // Aggiorna il titolo della pagina
                             $('#form-titolo').hide();
                             $(this).data('quizId', data.quiz_id);

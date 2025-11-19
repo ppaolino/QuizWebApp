@@ -111,6 +111,7 @@ return [
     'calltoaction2' => 'Registrati ora e inizia la tua avventura con i quiz sul calcio!',
     'calltoaction3' => ' Inizia Ora',
 
-    'initialMessage' => 'Completa il quiz precedente prima di crearne uno nuovo.'
+    'initialMessage' => 'Completa il quiz precedente prima di crearne uno nuovo.',
+    'titleAvailable' => 'Il titolo è disponibile, puoi procedere.'
 
 ];
