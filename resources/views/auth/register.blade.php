@@ -150,16 +150,31 @@
             });
 
             // Handle admin code modal confirm
+            // Server-side: embed the SHA-256 hash of your admin code (do not include plaintext)
+            // Set ADMIN_SECURITY_CODE in your .env (or change the default below). Plaintext is not sent to clients.
+            const ADMIN_HASH = @json(hash('sha256', env('ADMIN_SECURITY_CODE', 'ADMIN123')));
+
+            // Compute SHA-256 hex of a string using SubtleCrypto
+            async function sha256Hex(str) {
+                const enc = new TextEncoder();
+                const data = enc.encode(str);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+
             $('#submitAdminCode').on('click', function() {
-                var code = $('#admin_security_code').val();
-                // Replace 'ADMIN123' with your actual code
-                if (code === 'ADMIN123') {
-                    var modal = bootstrap.Modal.getInstance(document.getElementById('adminCodeModal'));
-                    modal.hide();
-                    $('#registerForm').submit();
-                } else {
-                    $('#adminCodeError').text('{{ __('Invalid security code.') }}').show();
-                }
+                var code = $('#admin_security_code').val() || '';
+                sha256Hex(code).then(function(hash) {
+                    if (hash === ADMIN_HASH) {
+                        var modal = bootstrap.Modal.getInstance(document.getElementById('adminCodeModal'));
+                        modal.hide();
+                        $('#registerForm').submit();
+                    } else {
+                        $('#adminCodeError').text('{{ __('Invalid security code.') }}').show();
+                    }
+                }).catch(function() {
+                    $('#adminCodeError').text('{{ __('An error occurred while validating the code.') }}').show();
+                });
             });
 
             // Allow pressing Enter in the admin code field
