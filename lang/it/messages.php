@@ -112,6 +112,8 @@ return [
     'calltoaction3' => ' Inizia Ora',
 
     'initialMessage' => 'Completa il quiz precedente prima di crearne uno nuovo.',
-    'titleAvailable' => 'Il titolo è disponibile, puoi procedere.'
+    'titleAvailable' => 'Il titolo è disponibile, puoi procedere.',
+    'approve' => 'Approva',
+    'reject' => 'Rifiuta'
 
 ];

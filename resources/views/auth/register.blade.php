@@ -100,7 +100,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
                         data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-                    <button type="button" class="btn btn-primary" id="submitAdminCode">{{ __('Confirm') }}</button>
+                    <button type="button" class="btn btn-success" id="submitAdminCode">{{ __('Confirm') }}</button>
                 </div>
             </div>
         </div>

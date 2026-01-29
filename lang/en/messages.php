@@ -111,5 +111,7 @@ return [
     'calltoaction2' => 'Sign up now and start your soccer quiz adventure!',
     'calltoaction3' => ' Get Started',
     'initialMessage' => 'Finish the previous quiz before creating a new one.',
-    'titleAvailable' => 'Title is available, you can proceed.'
+    'titleAvailable' => 'Title is available, you can proceed.',
+    'approve' => 'Approve',
+    'reject' => 'Reject'
 ];

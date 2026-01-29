@@ -45,7 +45,7 @@
             </div>
             <div class="row  d-flex justify-content-center align-items-center ">
                 <div class="col-md-6 mb-3">
-                    <button type="submit" class="btn btn-outline-secondary" id="verifyButton">@lang('messages.verify')</button>
+                    <button type="submit" class="btn btn-outline-primary" id="verifyButton">@lang('messages.verify')</button>
                 </div>
             </div>
         </form>
@@ -153,7 +153,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">@lang('messages.close')</button>
 
-                        <button type="button" class="btn btn-light" id="savePlayer">@lang('messages.save')</button>
+                        <button type="button" class="btn btn-success" id="savePlayer">@lang('messages.save')</button>
                     </div>
                 </div>
             </div>
