@@ -28,30 +28,35 @@
                             $cardBodyClass = 'quiz-card-body-primary';
                             $route = '/game/' . Hashids::encode($quiz->id) . '/start';
                             $method = 'POST';
+                            $buttonLabel = __('messages.playQuiz');
                             break;
                         case 0:
                             $cardColorClass = 'bg-warning';
                             $cardBodyClass = 'quiz-card-body-warning';
                             $route = '/game/' . Hashids::encode($quiz->id) . '/play';
                             $method = 'GET';
+                            $buttonLabel = __('messages.continueQuiz');
                             break;
                         case 1:
                             $cardColorClass = 'bg-success';
                             $cardBodyClass = 'quiz-card-body-success';
                             $route = '/game/' . Hashids::encode($quiz->id) . '/start';
                             $method = 'POST';
+                            $buttonLabel = __('messages.retakeQuiz');
                             break;
                         case 2:
                             $cardColorClass = 'bg-danger';
                             $cardBodyClass = 'quiz-card-body-danger';
                             $route = '/game/' . Hashids::encode($quiz->id) . '/start';
                             $method = 'POST';
+                            $buttonLabel = __('messages.retakeQuiz');
                             break;
                         default:
                             $cardColorClass = 'bg-secondary'; // fallback
                             $cardBodyClass = 'quiz-card-body-primary';
                             $route = '/game/' . Hashids::encode($quiz->id) . '/start';
                             $method = 'POST';
+                            $buttonLabel = __('messages.playQuiz');
                     }
                 @endphp
 
@@ -68,7 +73,7 @@
                     <div class="card-footer">
                         <form action="{{ $route }}" method="{{ $method }}">
                             @csrf
-                            <button type="submit" class="btn btn-light">@lang('messages.play')</button>
+                            <button type="submit" class="btn btn-light">{{ $buttonLabel }}</button>
                         </form>
                     </div>
                 </div>

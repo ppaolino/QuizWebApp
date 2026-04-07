@@ -175,6 +175,8 @@ class QuizController extends Controller
                     'player' => $dl->getPlayerNameById($answer['player_id']),
                     'context' => $dl->getPlayerNameById($answer['player_id']) . " (" . $answer['context_info'] . ")",
                     'image' => $image,
+                    'answerId' => $answer['answer_id'],
+                    'deletable' => true,
                 ])->render();
 
                 $cards[] = $html;

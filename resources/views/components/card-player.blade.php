@@ -5,6 +5,7 @@
     'context' => null,
     'image' => null,
     'answerId' => null,
+    'deletable' => false,
 ])
 
 @php
@@ -31,7 +32,14 @@
             @endif
         </small>
     </div>
+    
     <img src="{{ $image }}" class="card-img-top card-player-img d-block" alt=" ">
+    @if ($deletable && $answerId)
+        <button type="button" class="btn btn-sm btn-danger quiz-answer-delete-btn" data-answer-id="{{ $answerId }}"
+            title="Delete answer" aria-label="Delete answer">
+            <i class="bi bi-trash3-fill"></i>
+        </button>
+    @endif
 </div>
 
 @once

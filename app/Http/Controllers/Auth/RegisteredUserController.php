@@ -46,6 +46,12 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        $request->session()->flash('banner', [
+            'type' => 'success',
+            'title_key' => 'messages.welcomeSignupTitle',
+            'body_key' => 'messages.welcomeSignupBody',
+        ]);
+
         return redirect(route('home', absolute: false));
     }
 }

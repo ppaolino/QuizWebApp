@@ -10,6 +10,17 @@ return [
     'signup' => 'Sign Up',
     'logout' => 'Logout',
     'play' => 'Play a quiz',
+    'playQuiz' => 'Play the quiz',
+    'continueQuiz' => 'Continue the quiz',
+    'retakeQuiz' => 'Retake the quiz',
+    'guessCorrect' => 'Correct guess',
+    'guessWrong' => 'Wrong guess',
+    'welcomeBackTitle' => 'Welcome back',
+    'welcomeBackBody' => 'You are now signed in.',
+    'goodbyeTitle' => 'Goodbye',
+    'goodbyeBody' => 'You have been signed out successfully.',
+    'welcomeSignupTitle' => 'Welcome to Soccer Quiz',
+    'welcomeSignupBody' => 'Your account has been created successfully.',
     'stats' => 'View your statistics',
     'create_quiz' => 'Create a quiz',
     'startQuiz' => 'Select a quiz to start playing.',
@@ -113,5 +124,7 @@ return [
     'initialMessage' => 'Finish the previous quiz before creating a new one.',
     'titleAvailable' => 'Title is available, you can proceed.',
     'approve' => 'Approve',
-    'reject' => 'Reject'
+    'reject' => 'Reject',
+    'quizHelpLabel' => 'How to play',
+    'quizHelpTooltip' => '<strong>Objective</strong><br>Guess all the players that fit the question. Each cell has hints to help you identify the correct player.<br><br><strong>How to Guess</strong><br>1. Use the search bar to find a player<br>2. Select a player to guess<br>3. Click on the guess button to submit<br>4. Correct guesses fill in the cell; wrong guesses add a strike<br><br><strong>Strikes</strong><br>You have a limited number of wrong guesses. When you run out, you lose.<br>Then you can either reveal the answers or go back to the quiz list to play a new game.'
 ];

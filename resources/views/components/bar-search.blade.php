@@ -57,19 +57,28 @@
             }
         });
 
-        // When a suggestion is selected
-        typeaheadInput.bind('typeahead:select', function(ev, suggestion) {
+        // Treat both explicit select and autocomplete as valid selection.
+        typeaheadInput.bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
+            // Force visible text immediately; avoids first-click UI lag in modal contexts.
+            $(this).typeahead('val', suggestion.name);
             $(this).data('selectedValue', suggestion.name);
             $(this).data('data-selected-value', suggestion.id);
+            $(this).typeahead('close');
         });
 
         // When input loses focus
         typeaheadInput.on('blur', function() {
-            if ($(this).data('selectedValue') !== $(this).val()) {
-                $(this).val('');
-                $(this).data('selectedValue', null);
-                $(this).data('data-selected-value', null);
-            }
+            const $input = $(this);
+
+            // On mouse click selection, blur can fire before typeahead updates selection.
+            // Delay cleanup to avoid dropping the first click.
+            setTimeout(function() {
+                if ($input.data('selectedValue') !== $input.val()) {
+                    //$input.val('');
+                    $input.data('selectedValue', null);
+                    $input.data('data-selected-value', null);
+                }
+            }, 120);
         });
 
         // When input changes (keyup, delete, etc.)

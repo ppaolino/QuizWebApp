@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DataLayer;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class QuizAnswerController extends Controller
 {
@@ -41,7 +42,11 @@ class QuizAnswerController extends Controller
             $image = asset('img/blank.jpg');
         }
 
-        $dl->addQuizAnswer($quizId,  $data);
+        $answer = $dl->addQuizAnswer($quizId,  $data);
+
+        if (!$answer) {
+            return response()->json(['success' => false, 'message' => 'Unable to save answer.'], 400);
+        }
 
         $html = view('components.card-player', [
             'active' => false,
@@ -49,6 +54,8 @@ class QuizAnswerController extends Controller
             'player' => $dl->getPlayerNameById($data['playerId']),
             'context' => $dl->getPlayerNameById($data['playerId'])." (".$data['context'].")",
             'image' => $image,
+            'answerId' => $answer->answer_id,
+            'deletable' => true,
         ])->render();
 
         return response()->json(['success' => true, 'html' => $html]);
@@ -84,6 +91,19 @@ class QuizAnswerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $quizId = session('active_quiz_id');
+
+        if (!$quizId) {
+            return response()->json(['success' => false, 'message' => 'No active draft quiz found.'], 400);
+        }
+
+        $dl = new DataLayer();
+        $deleted = $dl->deleteQuizAnswer((int) $quizId, (int) $id, (int) Auth::id());
+
+        if (!$deleted) {
+            return response()->json(['success' => false, 'message' => 'Answer not found or not deletable.'], 404);
+        }
+
+        return response()->json(['success' => true]);
     }
 }

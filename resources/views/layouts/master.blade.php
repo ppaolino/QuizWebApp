@@ -130,6 +130,19 @@
         </div>
     </nav>
 
+    @php
+        $banner = session('banner');
+    @endphp
+
+    @if ($banner)
+        <div id="app-feedback-banner"
+            class="alert app-feedback-banner {{ $banner['type'] === 'success' ? 'alert-success' : ($banner['type'] === 'info' ? 'alert-info' : 'alert-warning') }}"
+            role="status" aria-live="polite" aria-atomic="true">
+            <div class="fw-semibold">{{ __($banner['title_key'] ?? '') }}</div>
+            <div>{{ __($banner['body_key'] ?? '') }}</div>
+        </div>
+    @endif
+
     <main class="flex-grow-1">
         @yield('body')
     </main>
@@ -147,6 +160,24 @@
             </div>
         </div>
     </footer>
+
+    @if ($banner)
+        <script>
+            window.addEventListener('DOMContentLoaded', function() {
+                const banner = document.getElementById('app-feedback-banner');
+                if (!banner) {
+                    return;
+                }
+
+                window.setTimeout(function() {
+                    banner.classList.add('app-feedback-banner-hide');
+                    window.setTimeout(function() {
+                        banner.remove();
+                    }, 220);
+                }, 2500);
+            });
+        </script>
+    @endif
 
     @stack('scripts')
 </body>

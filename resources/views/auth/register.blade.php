@@ -55,7 +55,7 @@
                 <label for="role_creator" class="inline-flex items-center">
                     <input id="role_creator" type="checkbox"
                         class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="role"
-                        value="creator">
+                        value="creator" @checked(old('role') === 'creator')>
                     <span class="ms-2 text-sm text-gray-600">{{ __('Register as creator') }}</span>
                 </label>
             </div>
@@ -64,7 +64,7 @@
                 <label for="role_admin" class="inline-flex items-center">
                     <input id="role_admin" type="checkbox"
                         class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="role"
-                        value="admin">
+                        value="admin" @checked(old('role') === 'admin')>
                     <span class="ms-2 text-sm text-gray-600">{{ __('Register as admin') }}</span>
                 </label>
             </div>
@@ -138,8 +138,25 @@
 
             // Intercept register button click
             $('#registerBtn').on('click', function(e) {
+                e.preventDefault();
+
+                const form = document.getElementById('registerForm');
+                const selectedRole = $('#role_admin').is(':checked') ? 'admin' : ($('#role_creator').is(':checked') ?
+                    'creator' : null);
+
+                // Show browser validation errors first (required, email format, etc.)
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+
+                    // Keep role selection stable even when browser focuses invalid fields.
+                    if (selectedRole) {
+                        $('#role_admin').prop('checked', selectedRole === 'admin');
+                        $('#role_creator').prop('checked', selectedRole === 'creator');
+                    }
+                    return;
+                }
+
                 if ($('#role_admin').is(':checked')) {
-                    e.preventDefault();
                     $('#admin_security_code').val('');
                     $('#adminCodeError').hide();
                     var modal = new bootstrap.Modal(document.getElementById('adminCodeModal'));

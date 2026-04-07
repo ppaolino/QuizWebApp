@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class QuizAnswer extends Model
 {
     public $timestamps = false;
+    protected $primaryKey = 'answer_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
         'quiz_id',

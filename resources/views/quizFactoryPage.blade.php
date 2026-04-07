@@ -94,7 +94,7 @@
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header modal-bg-warning">
                         <h5 class="modal-title" id="inserPlayerLabel">@lang('messages.insertPlayer')</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         </button>
@@ -150,7 +150,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer modal-bg-warning">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">@lang('messages.close')</button>
 
                         <button type="button" class="btn btn-success" id="savePlayer">@lang('messages.save')</button>
@@ -173,6 +173,66 @@
             </div>
         </div>
 
+        <div class="modal fade" id="confirmSaveQuizModal" tabindex="-1" aria-labelledby="confirmSaveQuizModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header modal-bg-primary">
+                        <h5 class="modal-title" id="confirmSaveQuizModalLabel">Confirm save</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to save this quiz?
+                    </div>
+                    <div class="modal-footer modal-bg-primary">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">@lang('messages.close')</button>
+                        <button type="button" class="btn btn-primary" id="confirmFinalSave" data-bs-dismiss="modal">
+                            @lang('messages.confirm')
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="confirmDeleteAnswerModal" tabindex="-1"
+            aria-labelledby="confirmDeleteAnswerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header modal-bg-danger">
+                        <h5 class="modal-title" id="confirmDeleteAnswerModalLabel">Delete answer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this answer?
+                    </div>
+                    <div class="modal-footer modal-bg-danger">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">@lang('messages.close')</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteAnswer" data-bs-dismiss="modal">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header modal-bg-warning">
+                        <h5 class="modal-title" id="feedbackModalLabel">Notice</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="feedbackModalBody"></div>
+                    <div class="modal-footer modal-bg-warning">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                            @lang('messages.confirm')
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -180,6 +240,50 @@
 @endsection
 @push('scripts')
     <script>
+        function buildAnswerWrapper(cardHtml) {
+            const $temp = $('<div>').html(cardHtml);
+            const $card = $temp.find('.player-card').first();
+            const answerId = $card.data('answer-id');
+
+            const $wrapper = $('<div>', {
+                class: 'col col-lg-2 col-md-3 col-sm-4 col-xs-4 d-flex justify-content-center align-items-center mb-3 answer-wrapper',
+                'data-answer-id': answerId || ''
+            });
+
+            if ($card.length > 0) {
+                $wrapper.append($card);
+            } else {
+                $wrapper.html(cardHtml);
+            }
+
+            return $wrapper;
+        }
+
+        function showFeedbackModal(message, title = 'Notice') {
+            const variantClassMap = {
+                success: 'modal-bg-success',
+                error: 'modal-bg-danger',
+                warning: 'modal-bg-warning',
+                notice: 'modal-bg-warning',
+                info: 'modal-bg-primary',
+                confirm: 'modal-bg-primary'
+            };
+            const variantClasses = 'modal-bg-success modal-bg-danger modal-bg-warning modal-bg-primary';
+            const normalizedTitle = (title || '').toString().trim().toLowerCase();
+            const variantClass = variantClassMap[normalizedTitle] || 'modal-bg-warning';
+
+            const $feedbackModal = $('#feedbackModal');
+            const $feedbackHeader = $feedbackModal.find('.modal-header');
+            const $feedbackFooter = $feedbackModal.find('.modal-footer');
+
+            $feedbackHeader.removeClass(variantClasses).addClass(variantClass);
+            $feedbackFooter.removeClass(variantClasses).addClass(variantClass);
+            $('#feedbackModalLabel').text(title);
+            $('#feedbackModalBody').text(message);
+            const feedbackModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('feedbackModal'));
+            feedbackModal.show();
+        }
+
         const quiz = @json($quiz);
         if (quiz) {
             $('#title').text(quiz.name); // Update page title
@@ -193,10 +297,7 @@
             const answers = @json($cards);
 
             answers.forEach(element => {
-                const wrapper = $('<div>', {
-                    class: 'col col-lg-2 col-md-3 col-sm-4 col-xs-4 d-flex justify-content-center align-items-center mb-3',
-                    html: element
-                });
+                const wrapper = buildAnswerWrapper(element);
                 $('#component-container').append(wrapper);
             });
 
@@ -284,6 +385,7 @@
                     .then(data => {
                         if (data.available) {
                             const titleAvailable = @json(__('messages.titleAvailable'));
+                            showFeedbackModal(titleAvailable, 'Success');
                             $('#initialMessage').text(titleAvailable);
                             $('#title').text(titolo); // Aggiorna il titolo della pagina
                             $('#form-titolo').hide();
@@ -293,7 +395,7 @@
                             $('#finalSave').show();
                             $('#deleteQuiz').show();
                         } else {
-                            alert('Titolo già usato, scegline un altro.');
+                            showFeedbackModal('Titolo gia usato, scegline un altro.', 'Error');
                         }
                     });
             });
@@ -308,23 +410,18 @@
 
             const $contextInfo = $('#context_info');
             const $savePlayerButton = $('#savePlayer');
+            let pendingDeleteAnswerId = null;
 
             function updateVisibility() {
                 if ($checkboxTeam.is(':checked')) {
                     $teamsSearch.show();
                     $leaguesSearch.hide();
-                    $checkboxLeague.prop('checked', false);
-                    $checkboxNothing.prop('checked', false);
                 } else if ($checkboxLeague.is(':checked')) {
                     $leaguesSearch.show();
                     $teamsSearch.hide();
-                    $checkboxTeam.prop('checked', false);
-                    $checkboxNothing.prop('checked', false);
                 } else if ($checkboxNothing.is(':checked')) {
                     $teamsSearch.hide();
                     $leaguesSearch.hide();
-                    $checkboxTeam.prop('checked', false);
-                    $checkboxLeague.prop('checked', false);
                 } else {
                     // If none selected, hide all
                     $teamsSearch.hide();
@@ -332,18 +429,30 @@
                 }
             }
 
+            function handleSuggestionChange($selectedCheckbox) {
+                if ($selectedCheckbox.is(':checked')) {
+                    [$checkboxTeam, $checkboxLeague, $checkboxNothing].forEach($checkbox => {
+                        if (!$checkbox.is($selectedCheckbox)) {
+                            $checkbox.prop('checked', false);
+                        }
+                    });
+                }
+
+                updateVisibility();
+            }
+
             function save_player() {
                 const playerId = $playersSearch.data('data-selected-value');
 
                 if (!playerId) {
-                    alert('Please select a player.');
+                    showFeedbackModal('Please select a player.', 'Error');
                     return;
                 }
 
                 const context = $contextInfo.val();
 
                 if (!context) {
-                    alert('Please provide context information.');
+                    showFeedbackModal('Please provide context information.', 'Error');
                     return;
                 }
 
@@ -358,7 +467,7 @@
                 }
 
                 if (!team && !league && !$checkboxNothing.is(':checked')) {
-                    alert('Please select at least one type of suggestion.');
+                    showFeedbackModal('Please select at least one type of suggestion.', 'Error');
                     return;
                 }
 
@@ -378,33 +487,87 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-
-                            const wrapper = $('<div>', {
-                                class: 'col col-lg-2 col-md-3 col-sm-4 col-xs-4 d-flex justify-content-center align-items-center mb-3',
-                                html: data.html
-                            });
+                            const wrapper = buildAnswerWrapper(data.html);
                             $('#component-container').append(wrapper);
                             closeMyModal();
                         } else {
-                            alert('Error saving player.');
+                            showFeedbackModal('Error saving player.', 'Error');
                         }
+                    });
+            }
+
+            function askDeleteAnswer(answerId) {
+                if (!answerId) {
+                    showFeedbackModal('Unable to identify the answer to delete.', 'Error');
+                    return;
+                }
+
+                pendingDeleteAnswerId = answerId;
+                const deleteModalElement = document.getElementById('confirmDeleteAnswerModal');
+                const deleteModal = bootstrap.Modal.getOrCreateInstance(deleteModalElement);
+                deleteModal.show();
+            }
+
+            function delete_answer(answerId) {
+                fetch('/quiz_answer/' + answerId, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            const answerIdSelector = String(answerId).replace(/"/g, '\\"');
+                            const $wrapper = $('.answer-wrapper[data-answer-id="' + answerIdSelector + '"]');
+                            if ($wrapper.length) {
+                                $wrapper.remove();
+                            }
+                            showFeedbackModal('Answer deleted successfully.', 'Success');
+                        } else {
+                            showFeedbackModal(data.message || 'Delete failed.', 'Error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        showFeedbackModal('Error during delete request.', 'Error');
                     });
             }
 
             function save_quiz() {
                 const prompt_text = $('#prompt').val();
 
+                if ($('#component-container').children().length === 0) {
+                    showFeedbackModal('Please insert at least one answer before saving the quiz.', 'Error');
+                    return;
+                }
+
                 if (!prompt_text) {
-                    alert('Please insert the context info.');
+                    showFeedbackModal('Please insert the context info.', 'Error');
                     return;
                 }
 
                 const max_errors = $('#max_errors').val();
 
                 if (!max_errors) {
-                    alert('Please a number of errors.');
+                    showFeedbackModal('Please select a number of errors.', 'Error');
                     return;
                 }
+
+                const confirmModalElement = document.getElementById('confirmSaveQuizModal');
+                const confirmModal = bootstrap.Modal.getOrCreateInstance(confirmModalElement);
+                confirmModal.show();
+            }
+
+            function submit_quiz_save() {
+                const prompt_text = $('#prompt').val();
+                const max_errors = $('#max_errors').val();
 
                 fetch('/quiz', {
                         method: 'PUT',
@@ -425,15 +588,15 @@
                     })
                     .then(data => {
                         if (data.success) {
-                            alert('Updated successfully!');
+                            showFeedbackModal('Updated successfully!', 'Success');
                             window.location.href = data.redirect_url; // Redirect client-side
                         } else {
-                            alert('Update failed.');
+                            showFeedbackModal('Update failed.', 'Error');
                         }
                     })
                     .catch(error => {
                         console.error('Fetch error:', error);
-                        alert('Error during request.');
+                        showFeedbackModal('Error during request.', 'Error');
                     });
 
 
@@ -442,11 +605,38 @@
 
 
             // Event listeners
-            $checkboxTeam.on('change', updateVisibility);
-            $checkboxLeague.on('change', updateVisibility);
-            $checkboxNothing.on('change', updateVisibility);
+            $checkboxTeam.on('change', function() {
+                handleSuggestionChange($checkboxTeam);
+            });
+            $checkboxLeague.on('change', function() {
+                handleSuggestionChange($checkboxLeague);
+            });
+            $checkboxNothing.on('change', function() {
+                handleSuggestionChange($checkboxNothing);
+            });
             $savePlayerButton.on('click', save_player);
             $('#finalSave').on('click', save_quiz);
+            $('#confirmFinalSave').on('click', submit_quiz_save);
+            $('#component-container').on('click', '.quiz-answer-delete-btn', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const answerId = $(this).data('answer-id') || $(this).closest('.player-card').data('answer-id');
+                askDeleteAnswer(answerId);
+            });
+
+            $('#confirmDeleteAnswer').on('click', function() {
+                if (!pendingDeleteAnswerId) {
+                    return;
+                }
+
+                const answerId = pendingDeleteAnswerId;
+                pendingDeleteAnswerId = null;
+                delete_answer(answerId);
+            });
+
+            $('#confirmDeleteAnswerModal').on('hidden.bs.modal', function() {
+                pendingDeleteAnswerId = null;
+            });
 
             // Initial state
             updateVisibility();

@@ -28,6 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $request->session()->flash('banner', [
+            'type' => 'success',
+            'title_key' => 'messages.welcomeBackTitle',
+            'body_key' => 'messages.welcomeBackBody',
+        ]);
+
         return redirect()->intended(route('home', absolute: false));
     }
 
@@ -42,6 +48,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        $request->session()->flash('banner', [
+            'type' => 'info',
+            'title_key' => 'messages.goodbyeTitle',
+            'body_key' => 'messages.goodbyeBody',
+        ]);
+
+        return redirect()->route('home');
     }
 }

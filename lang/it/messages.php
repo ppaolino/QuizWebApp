@@ -10,6 +10,17 @@ return [
     'signup' => 'Registrati',
     'logout' => 'Esci',
     'play' => 'Gioca un quiz',
+    'playQuiz' => 'Gioca il quiz',
+    'continueQuiz' => 'Continua il quiz',
+    'retakeQuiz' => 'Rigioca il quiz',
+    'guessCorrect' => 'Risposta corretta',
+    'guessWrong' => 'Risposta errata',
+    'welcomeBackTitle' => 'Bentornato',
+    'welcomeBackBody' => 'Hai effettuato l\'accesso.',
+    'goodbyeTitle' => 'Arrivederci',
+    'goodbyeBody' => 'Hai effettuato il logout con successo.',
+    'welcomeSignupTitle' => 'Benvenuto su Soccer Quiz',
+    'welcomeSignupBody' => 'Il tuo account è stato creato con successo.',
     'stats' => 'Vedi le tue statistiche',
     'create_quiz' => 'Crea un quiz',
     'startQuiz' => 'Scegli un quiz per iniziare a giocare.',
@@ -114,6 +125,8 @@ return [
     'initialMessage' => 'Completa il quiz precedente prima di crearne uno nuovo.',
     'titleAvailable' => 'Il titolo è disponibile, puoi procedere.',
     'approve' => 'Approva',
-    'reject' => 'Rifiuta'
+    'reject' => 'Rifiuta',
+    'quizHelpLabel' => 'Come si gioca',
+    'quizHelpTooltip' => '<strong>Obiettivo</strong><br>Indovina tutti i giocatori che rispondono alla domanda. Ogni cella ha suggerimenti per aiutarti a identificare il giocatore corretto.<br><br><strong>Come indovinare</strong><br>1. Usa la barra di ricerca per trovare un giocatore<br>2. Seleziona un giocatore da provare<br>3. Clicca sul pulsante indovina per inviare<br>4. Le risposte corrette riempiono la cella; le risposte sbagliate aggiungono un errore<br><br><strong>Errori</strong><br>Hai un numero limitato di tentativi sbagliati. Quando finiscono, perdi.<br>Poi puoi rivelare le risposte oppure tornare alla lista quiz per giocarne uno nuovo.'
 
 ];

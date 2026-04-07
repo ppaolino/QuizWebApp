@@ -260,6 +260,29 @@ class DataLayer
         return $answer;
     }
 
+    //creator
+    public function deleteQuizAnswer(int $quizId, int $answerId, int $creatorId): bool
+    {
+        $quiz = Quiz::where('id', $quizId)
+            ->where('created_by', $creatorId)
+            ->where('status', 0)
+            ->first();
+
+        if (!$quiz) {
+            return false;
+        }
+
+        $answer = QuizAnswer::where('answer_id', $answerId)
+            ->where('quiz_id', $quizId)
+            ->first();
+
+        if (!$answer) {
+            return false;
+        }
+
+        return (bool) $answer->delete();
+    }
+
     function getPlayerNameById($id)
     {
         $player = Player::find($id);
